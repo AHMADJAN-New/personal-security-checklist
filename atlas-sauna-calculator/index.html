@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ps" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اطلس سونا - پرمختللې مالي محاسبه</title>
+<style>
+:root{--navy:#0b0b56;--navy2:#242475;--bg:#f4f6fb;--card:#fff;--text:#161a2b;--muted:#6b7280;--line:#e4e7ef;--green:#087a4d;--greenbg:#eaf8f1;--red:#b6372b;--redbg:#fff0ee;--orange:#a56300;--orangebg:#fff7e3}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Tahoma,Arial,sans-serif;color:var(--text)}
+.wrap{max-width:1200px;margin:auto;padding:18px}.hero{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:24px;border-radius:18px;margin-bottom:16px;box-shadow:0 10px 30px rgba(11,11,86,.18)}
+.hero h1{margin:0 0 7px;font-size:28px}.hero p{margin:0;opacity:.9;line-height:1.8}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 16px rgba(0,0,0,.05)}.card h2{margin:0 0 15px;color:var(--navy);font-size:20px}
+.inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{background:#fafbfe;border:1px solid var(--line);border-radius:11px;padding:10px}
+label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}input{width:100%;border:1px solid #d9dce7;border-radius:8px;padding:10px;font-size:17px;font-weight:700;outline:none;background:#fff;direction:ltr;text-align:left}
+input:focus{border-color:#8585bb;box-shadow:0 0 0 3px rgba(11,11,86,.07)}.buttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}button{border:0;border-radius:10px;padding:11px 16px;font-size:14px;font-weight:700;cursor:pointer}
+.primary{background:var(--navy);color:#fff}.secondary{background:#eceef7;color:var(--navy)}.results{display:grid;grid-template-columns:1fr 1fr;gap:10px}.kpi{background:#f8f9fd;border:1px solid var(--line);border-radius:12px;padding:13px}
+.kpi .name{font-size:12px;color:var(--muted)}.kpi .value{font-size:21px;font-weight:800;margin-top:6px;direction:ltr;text-align:right}.full{grid-column:1/-1}.good .value{color:var(--green)}.bad .value{color:var(--red)}.warn .value{color:var(--orange)}
+.status{margin-top:12px;padding:13px;border-radius:11px;font-weight:700;line-height:1.7}.status.good{background:var(--greenbg);color:var(--green)}.status.bad{background:var(--redbg);color:var(--red)}.status.warn{background:var(--orangebg);color:var(--orange)}
+.breakgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.info{background:#fbfcff;border:1px solid var(--line);border-radius:12px;padding:13px}.info span{font-size:12px;color:var(--muted);display:block}.info b{font-size:18px;margin-top:5px;display:block;direction:ltr;text-align:right}
+table{width:100%;border-collapse:collapse;margin-top:8px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:center;font-size:13px}th{background:#f5f6fb;color:var(--navy)}.summary{background:#f6f7fb;border-radius:12px;padding:14px;line-height:1.9;margin-top:12px}.note{font-size:12px;color:var(--muted);line-height:1.8;margin-top:10px}
+@media(max-width:850px){.grid,.inputs,.results,.breakgrid{grid-template-columns:1fr}.wrap{padding:10px}.hero{padding:18px}.hero h1{font-size:23px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hero"><h1>اطلس سونا — پرمختللې مالي محاسبه</h1><p>شمېرې داخل کړئ او «محاسبه» ووهئ. سیستم به ګټه، تاوان، Break-even، لازم عاید، لازم مشتریان او هدفونه محاسبه کړي.</p></div>
+<div class="grid">
+<div class="card"><h2>۱) مالي او عملیاتي معلومات</h2><div class="inputs">
+<div class="field"><label>میاشتنۍ کرایه (AFN)</label><input id="rent" type="number" value="1715000"></div>
+<div class="field"><label>نور میاشتني عملیاتي مصارف (AFN)</label><input id="opex" type="number" value="1000000"></div>
+<div class="field"><label>ورځني مشتریان</label><input id="customers" type="number" value="280"></div>
+<div class="field"><label>اوسط ټکټ قیمت (AFN)</label><input id="ticket" type="number" value="350"></div>
+<div class="field"><label>په میاشت کې د فعالیت ورځې</label><input id="days" type="number" value="30"></div>
+<div class="field"><label>کافه: اوسط عاید پر هر مشتری (AFN)</label><input id="cafe" type="number" value="0"></div>
+<div class="field"><label>د مساج میاشتنی خالص عاید (AFN)</label><input id="massage" type="number" value="0"></div>
+<div class="field"><label>پارکینګ او نور میاشتنی خالص عاید (AFN)</label><input id="other" type="number" value="0"></div>
+<div class="field"><label>ترمیم/تجهیزات - یو ځل مصرف (AFN)</label><input id="capex" type="number" value="0"></div>
+<div class="field"><label>تجهیزات پر څو میاشتو ووېشو؟</label><input id="capexMonths" type="number" value="12"></div>
+<div class="field"><label>احتیاطي/متفرقه میاشتنی مصرف (AFN)</label><input id="reserve" type="number" value="0"></div>
+<div class="field"><label>د شریکانو شمېر</label><input id="partners" type="number" value="3"></div>
+<div class="field"><label>مطلوبه میاشتنی ګټه (Target Profit)</label><input id="targetProfit" type="number" value="500000"></div>
+<div class="field"><label>متغیر مصرف پر مشتری (AFN)</label><input id="variableCost" type="number" value="0"></div>
+</div><div class="buttons">
+<button class="primary" onclick="calculate()">محاسبه</button><button class="secondary" onclick="setTicket(350)">ټکټ 350</button><button class="secondary" onclick="setTicket(400)">ټکټ 400</button><button class="secondary" onclick="setTicket(500)">ټکټ 500</button><button class="secondary" onclick="resetForm()">اصلي شمېرې</button>
+</div></div>
+<div class="card"><h2>۲) اوسنی وضعیت</h2><div class="results">
+<div class="kpi"><div class="name">میاشتني مشتریان</div><div class="value" id="monthlyCustomers">-</div></div>
+<div class="kpi"><div class="name">میاشتنی ټکټ عاید</div><div class="value" id="ticketRevenue">-</div></div>
+<div class="kpi"><div class="name">ټول میاشتنی عاید</div><div class="value" id="totalRevenue">-</div></div>
+<div class="kpi"><div class="name">ټول میاشتنی مصرف</div><div class="value" id="totalCost">-</div></div>
+<div class="kpi full" id="profitBox"><div class="name">میاشتنۍ ګټه / تاوان</div><div class="value" id="profit">-</div></div>
+<div class="kpi"><div class="name">ګټې Margin</div><div class="value" id="margin">-</div></div>
+<div class="kpi"><div class="name">د هر شریک سهم</div><div class="value" id="partnerShare">-</div></div>
+<div class="kpi"><div class="name">ورځنی عاید</div><div class="value" id="dailyRevenue">-</div></div>
+<div class="kpi"><div class="name">ورځنی مصرف</div><div class="value" id="dailyCost">-</div></div>
+</div><div id="status" class="status warn">د محاسبې تڼۍ ووهئ.</div></div>
+</div>
+<div class="card" style="margin-top:16px"><h2>۳) Break-even — د تاوان نه کولو حد</h2><div class="breakgrid">
+<div class="info"><span>Break-even میاشتنی عاید</span><b id="beMonthlyRevenue">-</b></div>
+<div class="info"><span>Break-even ورځنی عاید</span><b id="beDailyRevenue">-</b></div>
+<div class="info"><span>Break-even مشتریان / ورځ</span><b id="beCustomers">-</b></div>
+<div class="info"><span>له Break-even څخه د مشتریانو فرق</span><b id="customerGap">-</b></div>
+<div class="info"><span>Break-even ته اضافي میاشتنی عاید پکار</span><b id="moneyGap">-</b></div>
+<div class="info"><span>په اوسنیو مشتریانو کې لازم ټکټ قیمت</span><b id="neededTicket">-</b></div>
+<div class="info"><span>د اوسني عاید پر اساس اعظمي کرایه</span><b id="maxRent">-</b></div>
+<div class="info"><span>Safety Margin</span><b id="safetyMargin">-</b></div>
+<div class="info"><span>اوسط عاید / مشتری</span><b id="revenuePerCustomer">-</b></div>
+</div></div>
+<div class="card" style="margin-top:16px"><h2>۴) د مطلوبې ګټې هدف</h2><div class="breakgrid">
+<div class="info"><span>Target Profit</span><b id="targetProfitShow">-</b></div>
+<div class="info"><span>د هدف لپاره لازم میاشتنی عاید</span><b id="targetRevenue">-</b></div>
+<div class="info"><span>د هدف لپاره مشتریان / ورځ</span><b id="targetCustomers">-</b></div>
+<div class="info"><span>نور څو مشتریان / ورځ پکار دي؟</span><b id="extraTargetCustomers">-</b></div>
+<div class="info"><span>په اوسنیو مشتریانو کې د هدف لازم ټکټ</span><b id="targetTicket">-</b></div>
+<div class="info"><span>د تجهیزاتو د بېرته پوره کېدو اټکل</span><b id="payback">-</b></div>
+</div></div>
+<div class="card" style="margin-top:16px"><h2>۵) د ټکټ قیمت سناریوګانې</h2><table><thead><tr><th>ټکټ</th><th>ټول عاید</th><th>ګټه / تاوان</th><th>Break-even مشتریان/ورځ</th><th>Margin</th></tr></thead><tbody id="scenarioBody"></tbody></table></div>
+<div class="card" style="margin-top:16px"><h2>۶) مدیریتي لنډیز</h2><div id="summary" class="summary">د محاسبې تڼۍ ووهئ.</div><div class="note">یادونه: دا مدیریتي اټکل دی. د حقیقي پرېکړې لپاره ثبت شوي عواید او مصارف وکاروئ.</div></div>
+</div>
+<script>
+function V(id){var x=parseFloat(document.getElementById(id).value);return isNaN(x)?0:x}
+function F(x){if(!isFinite(x))return "-";return Math.round(x).toLocaleString("en-US")+" AFN"}
+function N(x){if(!isFinite(x))return "-";return Math.round(x).toLocaleString("en-US")}
+function P(x){if(!isFinite(x))return "-";return x.toFixed(1)+"%"}
+function core(ticketOverride){
+var rent=V("rent"),opex=V("opex"),customers=V("customers"),ticket=(ticketOverride===undefined)?V("ticket"):ticketOverride;
+var days=Math.max(V("days"),1),cafe=V("cafe"),massage=V("massage"),other=V("other"),capex=V("capex"),capexMonths=Math.max(V("capexMonths"),1),reserve=V("reserve"),variableCost=V("variableCost");
+var monthlyCustomers=customers*days,ticketRevenue=monthlyCustomers*ticket,cafeRevenue=monthlyCustomers*cafe,grossRevenue=ticketRevenue+cafeRevenue+massage+other,variableMonthly=monthlyCustomers*variableCost,capexMonthly=capex/capexMonths,totalCost=rent+opex+reserve+capexMonthly+variableMonthly,profit=grossRevenue-totalCost;
+var contributionPerCustomer=ticket+cafe-variableCost,fixedNeed=Math.max(rent+opex+reserve+capexMonthly-massage-other,0),beCustomersMonth=contributionPerCustomer>0?fixedNeed/contributionPerCustomer:Infinity,beCustomersDay=beCustomersMonth/days;
+return {rent,opex,customers,ticket,days,cafe,massage,other,capex,capexMonths,reserve,variableCost,monthlyCustomers,ticketRevenue,cafeRevenue,grossRevenue,variableMonthly,capexMonthly,totalCost,profit,contributionPerCustomer,fixedNeed,beCustomersMonth,beCustomersDay}}
+function calculate(){
+var r=core(),target=V("targetProfit"),partners=Math.max(V("partners"),1);
+document.getElementById("monthlyCustomers").textContent=N(r.monthlyCustomers);
+document.getElementById("ticketRevenue").textContent=F(r.ticketRevenue);
+document.getElementById("totalRevenue").textContent=F(r.grossRevenue);
+document.getElementById("totalCost").textContent=F(r.totalCost);
+document.getElementById("profit").textContent=F(r.profit);
+document.getElementById("margin").textContent=P(r.grossRevenue>0?r.profit/r.grossRevenue*100:0);
+document.getElementById("partnerShare").textContent=F(r.profit>0?r.profit/partners:0);
+document.getElementById("dailyRevenue").textContent=F(r.grossRevenue/r.days);
+document.getElementById("dailyCost").textContent=F(r.totalCost/r.days);
+var beMonthlyRevenue=r.totalCost,beDailyRevenue=r.totalCost/r.days,customerGap=r.customers-r.beCustomersDay,moneyGap=Math.max(r.totalCost-r.grossRevenue,0),nonTicketRevenue=r.cafeRevenue+r.massage+r.other,neededTicket=r.monthlyCustomers>0?Math.max((r.totalCost-nonTicketRevenue)/r.monthlyCustomers,0):Infinity,allNonRentCost=r.opex+r.reserve+r.capexMonthly+r.variableMonthly,maxRent=Math.max(r.grossRevenue-allNonRentCost,0),safety=r.grossRevenue>0?(r.grossRevenue-r.totalCost)/r.grossRevenue*100:0,revPerCustomer=r.monthlyCustomers>0?(r.ticketRevenue+r.cafeRevenue)/r.monthlyCustomers:0;
+document.getElementById("beMonthlyRevenue").textContent=F(beMonthlyRevenue);
+document.getElementById("beDailyRevenue").textContent=F(beDailyRevenue);
+document.getElementById("beCustomers").textContent=N(Math.ceil(r.beCustomersDay));
+document.getElementById("customerGap").textContent=(customerGap>=0?"+":"")+N(customerGap);
+document.getElementById("moneyGap").textContent=F(moneyGap);
+document.getElementById("neededTicket").textContent=F(neededTicket);
+document.getElementById("maxRent").textContent=F(maxRent);
+document.getElementById("safetyMargin").textContent=P(safety);
+document.getElementById("revenuePerCustomer").textContent=F(revPerCustomer);
+var targetRevenue=r.totalCost+target,targetFixedNeed=r.fixedNeed+target,targetCustMonth=r.contributionPerCustomer>0?targetFixedNeed/r.contributionPerCustomer:Infinity,targetCustDay=targetCustMonth/r.days,extraTarget=Math.max(targetCustDay-r.customers,0),targetTicket=r.monthlyCustomers>0?Math.max((targetRevenue-nonTicketRevenue)/r.monthlyCustomers,0):Infinity,paybackMonths=(r.capex>0&&r.profit>0)?r.capex/r.profit:Infinity;
+document.getElementById("targetProfitShow").textContent=F(target);
+document.getElementById("targetRevenue").textContent=F(targetRevenue);
+document.getElementById("targetCustomers").textContent=N(Math.ceil(targetCustDay));
+document.getElementById("extraTargetCustomers").textContent=N(Math.ceil(extraTarget));
+document.getElementById("targetTicket").textContent=F(targetTicket);
+document.getElementById("payback").textContent=r.capex<=0?"تجهیزاتي مصرف نشته":(r.profit<=0?"په اوسني حالت کې نه راګرځي":paybackMonths.toFixed(1)+" میاشتې");
+var pb=document.getElementById("profitBox"),st=document.getElementById("status");
+pb.className="kpi full "+(r.profit>0?"good":r.profit<0?"bad":"warn");st.className="status "+(r.profit>0?"good":r.profit<0?"bad":"warn");
+st.textContent=r.profit>0?"اوسنی سناریو په ګټه کې دی. اټکلي میاشتنی خالص پاتې مبلغ: "+F(r.profit):r.profit<0?"اوسنی سناریو تاوان ښيي. Break-even ته نږدې "+F(moneyGap)+" نور میاشتنی عاید پکار دی.":"اوسنی سناریو تقریباً Break-even دی.";
+var tbody=document.getElementById("scenarioBody");tbody.innerHTML="";
+[300,350,400,450,500,550].forEach(function(t){var s=core(t),m=s.grossRevenue>0?s.profit/s.grossRevenue*100:0,color=s.profit>=0?"#087a4d":"#b6372b";tbody.innerHTML+="<tr><td>"+t+" AFN</td><td>"+F(s.grossRevenue)+"</td><td style='font-weight:800;color:"+color+"'>"+F(s.profit)+"</td><td>"+N(Math.ceil(s.beCustomersDay))+"</td><td>"+P(m)+"</td></tr>"});
+var directionText=r.profit>=0?"ستاسې اوسني ارقام Break-even څخه پورته دي.":"ستاسې اوسني ارقام Break-even څخه ښکته دي.";
+var targetText=extraTarget>0?"د "+F(target)+" میاشتني هدف لپاره نږدې "+N(Math.ceil(extraTarget))+" نور مشتریان په ورځ پکار دي، که نور ارقام ثابت پاتې شي.":"د ټاکلي Target Profit لپاره اوسني مشتریان کافي ښکاري، که نور ارقام ثابت پاتې شي.";
+document.getElementById("summary").innerHTML="په میاشت کې شاوخوا <b>"+N(r.monthlyCustomers)+"</b> مشتریان لرئ. ټول عاید <b>"+F(r.grossRevenue)+"</b> او ټول محاسبوي مصرف <b>"+F(r.totalCost)+"</b> دی. "+directionText+" د تاوان نه کولو لپاره نږدې <b>"+N(Math.ceil(r.beCustomersDay))+"</b> مشتریان په ورځ یا <b>"+F(beDailyRevenue)+"</b> ورځنی عاید ته اړتیا لرئ. "+targetText}
+function setTicket(v){document.getElementById("ticket").value=v;calculate()}
+function resetForm(){var d={rent:1715000,opex:1000000,customers:280,ticket:350,days:30,cafe:0,massage:0,other:0,capex:0,capexMonths:12,reserve:0,partners:3,targetProfit:500000,variableCost:0};Object.keys(d).forEach(function(k){document.getElementById(k).value=d[k]});calculate()}
+window.onload=calculate;
+</script>
+</body>
+</html>
